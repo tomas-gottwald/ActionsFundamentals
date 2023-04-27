@@ -1,0 +1,33 @@
+name: GitHub Actions Demo
+on:
+  # on every push to the main branch, but not when there are changes to files in the .github folder.
+  push:
+    branches: ['main']
+    paths-ignore: ['.github']
+  # on every pull request with main as the base branch
+  pull_request:
+    branches: ['main']
+  # Every sunday at 6:15 UTC
+  schedule:
+      - cron:  '15 6 * * SUN'
+  # Manually
+  workflow_dispatch:
+  
+jobs:
+  Build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "🎉 The job was triggered by event: ${{ github.event_name }}"
+          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ."
+
+      - uses: actions/checkout@v3.3.0
+
+      - name: List files in the repository
+        run: |
+          echo "The repository ${{ github.repository }} contains the following files:"
+          tree
+    
+
+  
